@@ -23,7 +23,7 @@ pub enum ClothesState {
     Tattered,
 }
 
-/// Something you can do with clothes
+/// Something you can do with clothesClean
 pub enum ClothesAction {
     /// Wearing clothes decreases their life by 1 and makes them dirty.
     Wear,
@@ -40,7 +40,22 @@ impl StateMachine for ClothesMachine {
     type Transition = ClothesAction;
 
     fn next_state(starting_state: &ClothesState, t: &ClothesAction) -> ClothesState {
-        todo!("Exercise 3")
+        match *t {
+            ClothesAction::Dry => {
+                match starting_state {
+                    &ClothesState::Clean(life) => return ClothesState::Clean(life-1),
+                    &ClothesState::Dirty(life) => ClothesState::Dirty(life-1),
+                }
+            },
+            ClothesAction::Wash => {},
+            ClothesAction::Wear => {},
+        }
+        match starting_state {
+            &ClothesState::Clean(life) => ClothesState::Dirty(life-1),
+            &ClothesState::Dirty(life) => ClothesState::Dirty(life-1),
+            &ClothesState::Tattered => ClothesState::Tattered,
+            &ClothesState::Wet(life) => ClothesState::Dirty(life-1)
+        }
     }
 }
 
