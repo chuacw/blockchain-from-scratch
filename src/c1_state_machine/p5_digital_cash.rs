@@ -1,3 +1,6 @@
+#![allow(dead_code)]
+#![allow(unused_variables)]
+
 //! In this module we design another multi-user currency system. This one is not based on
 //! accounts, but rather, is modelled after a paper cash system. The system tracks individual
 //! cash bills. Each bill has an amount and an owner, and can be spent in its entirety.

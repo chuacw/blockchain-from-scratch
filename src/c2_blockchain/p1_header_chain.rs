@@ -25,12 +25,22 @@ pub struct Header {
 impl Header {
     /// Returns a new valid genesis header.
     fn genesis() -> Self {
-        todo!("Exercise 1")
+        Self {
+            parent: 0,
+            height: 0,
+            state_root: (),
+            consensus_digest: (),
+            extrinsics_root: ()
+        }
     }
 
     /// Create and return a valid child header.
     fn child(&self) -> Self {
-        todo!("Exercise 2")
+        Self {
+            height: self.parent + 1,
+            parent: hash(self),
+            ..*self
+        }
     }
 
     /// Verify that all the given headers form a valid chain from this header to the tip.
@@ -38,7 +48,22 @@ impl Header {
     /// This method may assume that the block on which it is called is valid, but it
     /// must verify all of the blocks in the slice;
     fn verify_sub_chain(&self, chain: &[Header]) -> bool {
-        todo!("Exercise 3")
+        if chain.is_empty() {
+            return true;
+        }
+        let child = &chain[0];
+        // parent_hash
+        if hash(self) != child.parent {
+            return false;
+        }
+        // height
+        if self.height + 1 != child.height {
+            return false;
+        }
+        if chain.len() == 1 {
+            return true;
+        }
+        self.verify_sub_chain(&[self.child()])
     }
 }
 
@@ -46,14 +71,25 @@ impl Header {
 
 /// Build and return a valid chain with exactly five blocks including the genesis block.
 fn build_valid_chain_length_5() -> Vec<Header> {
-    todo!("Exercise 4")
+    // todo!("Exercise 4")
+    let g = Header::genesis();
+    let b1 = g.child();
+    let b2 = b1.child();
+    let b3 = b2.child();
+    let b4 = b3.child();
+    vec![g, b1, b2, b3, b4]
 }
 
 /// Build and return a chain with at least three headers.
 /// The chain should start with a proper genesis header,
 /// but the entire chain should NOT be valid.
 fn build_an_invalid_chain() -> Vec<Header> {
-    todo!("Exercise 5")
+    let g = Header::genesis();
+    let b1 = g.child();
+    let b2 = b1.child();
+    let b3 = b1.child();
+    b3.height = 50;
+    vec![g, b1, b2, b3]
 }
 
 // To run these tests: `cargo test bc_1

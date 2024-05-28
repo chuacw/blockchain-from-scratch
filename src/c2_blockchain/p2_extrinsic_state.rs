@@ -48,7 +48,23 @@ impl Header {
     /// So in order for a block to verify, we must have that relationship between the extrinsic,
     /// the previous state, and the current state.
     fn verify_sub_chain(&self, chain: &[Header]) -> bool {
-        todo!("Exercise 3")
+        if chain.is_empty() {
+            return true;
+        }
+        let child = &chain[0];
+        // parent_hash
+        if hash(self) != child.parent {
+            return false;
+        }
+        // height
+        if self.height + 1 != child.height {
+            return false;
+        }
+        if self.state + child.extrinsic != child.state {
+            return false;
+        }
+        let rest_of_chain = &chain[1..];
+        self.verify_sub_chain(&rest_of_chain)
     }
 }
 
@@ -56,7 +72,10 @@ impl Header {
 
 /// Build and return a valid chain with the given number of blocks.
 fn build_valid_chain(n: u64) -> Vec<Header> {
-    todo!("Exercise 4")
+
+    let g = Header::genesis();
+    let mut chain = Vec::new();
+    chain // fake value to continue compilation
 }
 
 /// Build and return a chain with at least three headers.
@@ -70,7 +89,11 @@ fn build_valid_chain(n: u64) -> Vec<Header> {
 /// For this function, ONLY USE the the `genesis()` and `child()` methods to create blocks.
 /// The exercise is still possible.
 fn build_an_invalid_chain() -> Vec<Header> {
-    todo!("Exercise 5")
+
+    let g = Header::genesis();
+    let b1 = g.child(0);
+    // let b2 = b1.
+    Vec::new()
 }
 
 /// Build and return two header chains.

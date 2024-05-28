@@ -1,3 +1,4 @@
+#![allow (dead_code)]
 //! When you wear clothes they get dirty. When you wash them they get wet. When you dry them, they're
 //! ready to be worn again. Or course washing and wearing clothes takes its toll on the clothes, and
 //! eventually they get tattered.
@@ -40,21 +41,26 @@ impl StateMachine for ClothesMachine {
     type Transition = ClothesAction;
 
     fn next_state(starting_state: &ClothesState, t: &ClothesAction) -> ClothesState {
-        match *t {
-            ClothesAction::Dry => {
-                match starting_state {
-                    &ClothesState::Clean(life) => return ClothesState::Clean(life-1),
-                    &ClothesState::Dirty(life) => ClothesState::Dirty(life-1),
-                }
-            },
-            ClothesAction::Wash => {},
-            ClothesAction::Wear => {},
-        }
-        match starting_state {
-            &ClothesState::Clean(life) => ClothesState::Dirty(life-1),
-            &ClothesState::Dirty(life) => ClothesState::Dirty(life-1),
-            &ClothesState::Tattered => ClothesState::Tattered,
-            &ClothesState::Wet(life) => ClothesState::Dirty(life-1)
+        use ClothesAction::*;
+        use ClothesState::*;
+
+        match (starting_state, t) {
+            (Clean(1), _) => Tattered,
+            (Dirty(1), _) => Tattered,
+            (Wet(1), _) => Tattered,
+            (Tattered, _) => Tattered,
+
+            (Clean(n), Wash) => Wet(n - 1),
+            (Clean(n), Wear) => Dirty(n - 1),
+            (Clean(n), Dry) => Clean(n - 1),
+
+            (Dirty(n), Wash) => Wet(n - 1),
+            (Dirty(n), Wear) => Dirty(n - 1),
+            (Dirty(n), Dry) => Dirty(n - 1),
+
+            (Wet(n), Wash) => Wet(n - 1),
+            (Wet(n), Wear) => Dirty(n - 1),
+            (Wet(n), Dry) => Clean(n - 1),
         }
     }
 }

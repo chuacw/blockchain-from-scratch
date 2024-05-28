@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+#![allow(unused_variables)]
 //! We begin our hands on exploration of state machines with two very simple examples.
 //! In these examples, we use actually switch boards as the state machine. The state is,
 //! well, just the state of the switches.

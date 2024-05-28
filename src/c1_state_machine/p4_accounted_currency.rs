@@ -1,3 +1,6 @@
+#![allow(dead_code)]
+#![allow(unused_variables)]
+
 //! The state machines we have written so far model individual devices that are typically used
 //! by a single user at a time. State machines can also model multi user systems. Blockchains
 //! strive to provide reliable public infrastructure. And the public is very much multiple users.

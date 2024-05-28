@@ -1,3 +1,6 @@
+#![allow(dead_code)]
+#![allow(unused_variables)]
+
 //! The automated teller machine gives you cash after you swipe your card and enter your pin.
 //! The atm may fail to give you cash if it is empty or you haven't swiped your card, or you have
 //! entered the wrong pin.
@@ -58,7 +61,64 @@ impl StateMachine for Atm {
     type Transition = Action;
 
     fn next_state(starting_state: &Self::State, t: &Self::Transition) -> Self::State {
-        todo!("Exercise 4")
+        todo!("Exercise 4");
+        // match (starting_state, t) {
+        //     (&Atm { cash_inside: cash_value,
+        //             expected_pin_hash: Auth::Waiting,
+        //             keystroke_register: _},
+        //      &Action::PressKey(key)) => {
+        //         Atm { cash_inside: cash_value, expected_pin_hash: Auth::Waiting, keystroke_register: Vec::new() }
+        //     },
+        //     (&Atm { cash_inside: cash_value,
+        //             expected_pin_hash: Auth::Waiting,
+        //             keystroke_register: _},
+        //      &Action::SwipeCard(pin)) => {
+        //         Atm { cash_inside: cash_value,
+        //               expected_pin_hash: Auth::Authenticating(pin),
+        //               keystroke_register: Vec::new() }
+        //     },
+        //     (&Atm { cash_inside: cash_value,
+        //         expected_pin_hash: Auth::Authenticating(pin_hash),
+        //         keystroke_register: ks_value}, &Action::SwipeCard(pin)) => {
+        //        Atm { cash_inside: cash_value,
+        //              expected_pin_hash: Auth::Authenticating(pin_hash),
+        //            keystroke_register: ks_value }
+        //     },
+        // }
+
+    // last try
+    //     match starting_state.expected_pin_hash {
+    //         Auth::Waiting => {
+    //             Atm {
+    //                 cash_inside: starting_state.cash_inside.clone(),
+    //                 expected_pin_hash: Auth::Waiting,
+    //                 keystroke_register: Vec::new()
+    //             }
+    //         }
+    //         Auth::Authenticating(pin_hash) => {
+    //             match t {
+    //                 Action::PressKey(key) => {
+    //                     let mut new_keystroke_register = Vec::new();
+    //                     let _ = starting_state.keystroke_register.iter().map(|elem| new_keystroke_register.push(elem.clone()));
+    //                     Atm {
+    //                         cash_inside: starting_state.cash_inside.clone(),
+    //                         expected_pin_hash: Auth::Authenticating(pin_hash),
+    //                         keystroke_register: new_keystroke_register,
+    //                     }
+    //                 },
+    //                 Action::SwipeCard(pin_hash) => {
+    //                         Atm {
+    //                             cash_inside: starting_state.cash_inside.clone(),
+    //                             expected_pin_hash: Auth::Authenticating(*pin_hash),
+    //                             keystroke_register: Vec::new(),
+    //                         }
+    //                 },
+    //             }
+    //         }
+    //         Auth::Authenticated => {}
+    //     }
+    // }
+    todo!()
     }
 }
 

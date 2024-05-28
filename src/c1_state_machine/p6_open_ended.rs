@@ -1,3 +1,6 @@
+#![allow(dead_code)]
+#![allow(unused_variables)]
+
 //! Now is your chance to get creative. Choose a state machine that interests you and model it here.
 //! Get as fancy as you like. The only constraint is that it should be simple enough that you can
 //! realistically model it in an hour or two.
